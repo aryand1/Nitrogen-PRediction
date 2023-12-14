@@ -1,0 +1,32 @@
+#Use PROJECT1 to implement
+#TO load CSV files
+
+
+LOAD CSV WITH HEADERS FROM 'file:///Crop_recommendation.csv' AS row
+CREATE (c:Crop {label: row.label, ph: toFloat(row.ph), rainfall: toFloat(row.rainfall), humidity: toFloat(row.humidity), temperature: toFloat(row.temperature), potassium: toFloat(row.potassium), phosphorus: toFloat(row.phosphorus), nitrogen: toFloat(row.Nitrogen)})
+
+#To form proxy variables
+
+WITH c
+MERGE (s:Soil {ph: c.ph})
+MERGE (r:Rainfall {value: c.rainfall})
+MERGE (h:Humidity {value: c.humidity})
+MERGE (t:Temperature {value: c.temperature})
+MERGE (po:Potassium {value: c.potassium})
+MERGE (pho:Phosphorus {value: c.phosphorus})
+MERGE (n:Nitrogen {value: c.nitrogen})
+
+#To from relationships
+
+CREATE (c)-[:soil_had_ph]->(s)
+CREATE (c)-[:had_rainfall]->(r)
+CREATE (c)-[:grew_at_humidity]->(h)
+CREATE (c)-[:temp_at_temperature]->(t)
+CREATE (c)-[:used_potassium]->(po)
+CREATE (c)-[:used_phosphorus]->(pho)
+CREATE (c)-[:used_nitrogen]->(n)
+
+#Visualize the graph
+
+MATCH (c:Crop)-[r]-(n)
+RETURN c, r, n
