@@ -49,7 +49,7 @@ Your Name
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-On how to run please other readme file in repo
+On how to run please other readme.pdf file in repo
 
 Acknowledgments
 We appreciate the contributors and data sources that contributed to the success of this project.
